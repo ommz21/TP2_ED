@@ -1,6 +1,7 @@
 #ifndef INSERTION_H
 #define INSERTION_H
 #include <string>
+#include <vector>
 
 typedef int TipoChave; //TipoChave é um inteiro
 
@@ -32,8 +33,7 @@ class ArranjoPlanetas
         void InsertionSort();
 
     private:
-        static const int MAXTAM = 200;
-        Planeta planetas[MAXTAM];
+        std::vector<Planeta> planetas;
         int tamanho;
 };
 

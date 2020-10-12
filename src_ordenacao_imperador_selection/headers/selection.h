@@ -1,6 +1,7 @@
 #ifndef SELECTION_H
 #define SELECTION_H
 #include <string>
+#include <vector>
 
 typedef int TipoChave; //TipoChave é um inteiro
 
@@ -33,8 +34,8 @@ class ArranjoPlanetas
         void SelectionSort();
 
     private:
-        static const int MAXTAM = 200;
-        Planeta planetas[MAXTAM];
+        //static const int MAXTAM = 200;
+        std::vector<Planeta> planetas;
         int tamanho;
 };
 

@@ -4,6 +4,7 @@
 /*Implementacao dos metodos da classe Planeta.*/
 Planeta::Planeta()
 {
+    nome = " ";
     distancia = -1;
     populacao = -1;
 }
@@ -27,9 +28,7 @@ int Planeta::GetPopulacao()
 }
 void Planeta::Imprime()
 {
-    printf("%s ", nome);
-    printf("%d ", distancia);
-    printf("%d\n", populacao);
+    std::cout << nome << " " << distancia << " " << populacao << std::endl;
 }
 
 /*Implementacao dos metodos da classe ArranjoPlanetas.*/
@@ -37,21 +36,15 @@ ArranjoPlanetas::ArranjoPlanetas()
 {
     tamanho = 0;
 }
-ArranjoPlanetas::~ArranjoPlanetas()
-{
-    for(int i = 0; i < tamanho; i++)
-        delete planetas[i];
-}
 void ArranjoPlanetas::InsereFinal(Planeta p)
 {
-    Planeta *novo = new Planeta(p.GetNome(), p.GetDistancia(), p.GetPopulacao());
-    planetas.push_back(novo);
+    planetas.push_back(p);
     tamanho++;
 }
 void ArranjoPlanetas::Imprime()
 {
     for(int i = 0; i < tamanho; i++)
-        planetas[i]->Imprime();
+        planetas[i].Imprime();
 }
 void ArranjoPlanetas::Limpa()
 {
@@ -60,7 +53,7 @@ void ArranjoPlanetas::Limpa()
 void ArranjoPlanetas::RefazHeap(int Esq, int Dir)
 {
     int i, j;
-    Planeta *x;
+    Planeta x;
     i = Esq;
     j = ((i + 1) * 2) - 1;
     x = planetas[i];
@@ -68,14 +61,14 @@ void ArranjoPlanetas::RefazHeap(int Esq, int Dir)
     {
         if(j < Dir)
         {
-            if(planetas[j]->GetDistancia() < planetas[j + 1]->GetDistancia())
+            if(planetas[j].GetDistancia() < planetas[j + 1].GetDistancia())
                 j++;
-            else if(planetas[j]->GetDistancia() == planetas[j + 1]->GetDistancia() && planetas[j]->GetPopulacao() > planetas[j + 1]->GetPopulacao())
+            else if(planetas[j].GetDistancia() == planetas[j + 1].GetDistancia() && planetas[j].GetPopulacao() > planetas[j + 1].GetPopulacao())
                 j++;
         }
-        if(x->GetDistancia() > planetas[j]->GetDistancia())
+        if(x.GetDistancia() > planetas[j].GetDistancia())
             break;
-        else if(x->GetDistancia() == planetas[j]->GetDistancia() && x->GetPopulacao() <= planetas[j]->GetPopulacao())
+        else if(x.GetDistancia() == planetas[j].GetDistancia() && x.GetPopulacao() <= planetas[j].GetPopulacao())
             break;
         planetas[i] = planetas[j];
         i = j;
@@ -96,7 +89,7 @@ void ArranjoPlanetas::ConstroiHeap()
 void ArranjoPlanetas::HeapSort()
 {
     int Esq, Dir;
-    Planeta *x;
+    Planeta x;
     ConstroiHeap(); // constroi o heap 
     Esq = 0;
     Dir = tamanho - 1;

@@ -1,4 +1,4 @@
 *.o
 *.exe
-*.in
-*.out
+Testes
+.vscode

@@ -26,7 +26,6 @@ class ArranjoPlanetas
 {
     public:
         ArranjoPlanetas();
-        ~ArranjoPlanetas();
         void InsereFinal(Planeta p);
         void Imprime();
         void Limpa();
@@ -36,7 +35,7 @@ class ArranjoPlanetas
 
     private:
         //static const int MAXTAM = 200;
-        std::vector<Planeta*> planetas;
+        std::vector<Planeta> planetas;
         int tamanho;
 };
 

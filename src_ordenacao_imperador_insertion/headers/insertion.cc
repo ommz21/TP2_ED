@@ -38,9 +38,7 @@ ArranjoPlanetas::ArranjoPlanetas()
 }
 void ArranjoPlanetas::InsereFinal(Planeta p)
 {
-    if(tamanho == MAXTAM)
-        throw std::invalid_argument("ERRO: Lista cheia!");
-    planetas[tamanho] = p;
+    planetas.push_back(p);
     tamanho++;
 }
 void ArranjoPlanetas::Imprime()
