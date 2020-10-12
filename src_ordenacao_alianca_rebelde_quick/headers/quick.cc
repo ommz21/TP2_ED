@@ -2,29 +2,11 @@
 #include <iostream>
 
 /*Implementacao dos metodos da classe Planeta.*/
-Planeta::Planeta()
-{
-    nome = " ";
-    distancia = -1;
-    populacao = -1;
-}
 Planeta::Planeta(std::string n, int d, int p)
 {
     nome = n;
     distancia = d;
     populacao = p;
-}
-std::string Planeta::GetNome()
-{
-    return nome;
-}
-int Planeta::GetDistancia()
-{
-    return distancia;
-}
-int Planeta::GetPopulacao()
-{
-    return populacao;
 }
 void Planeta::Imprime()
 {
@@ -46,32 +28,33 @@ void ArranjoPlanetas::Imprime()
     for(int i = 0; i < tamanho; i++)
         planetas[i].Imprime();
 }
-void ArranjoPlanetas::Limpa()
-{
-    tamanho = 0;
-}
 void ArranjoPlanetas::ParticaoQuick(int esq, int dir, int &i, int &j)
 {
-    Planeta x, w;
+    Planeta x("", -1, -1);
+    Planeta w("", -1, -1);
     i = esq;
     j = dir;
-    x = planetas[(i + j)/2]; //obtem o pivo x 
+    //Obtem o pivo x
+    x = planetas[(i + j)/2]; 
     do
     {
-        while(x.GetDistancia() >= planetas[i].GetDistancia())
+        //Adaptacao para incluir na logica do quick sort o fato de que dois planetas com a mesma
+        //distancia mas o que possuir a menor populacao deve ficar mais a direita na lista
+        while(x.distancia >= planetas[i].distancia)
         {
-            if(x.GetDistancia() == planetas[i].GetDistancia() && x.GetPopulacao() >= planetas[i].GetPopulacao())
+            if(x.distancia == planetas[i].distancia && x.populacao >= planetas[i].populacao)
                 break;
             i++;
         }
-        while(x.GetDistancia() <= planetas[j].GetDistancia())
+        while(x.distancia <= planetas[j].distancia)
         {
-            if(x.GetDistancia() == planetas[j].GetDistancia() && x.GetPopulacao() <= planetas[j].GetPopulacao())
+            if(x.distancia == planetas[j].distancia && x.populacao <= planetas[j].populacao)
                 break;
             j--;
         }
         if(i <= j)
         {
+            //Troca os planetas toda vez que for necessario a partir das comparacoes com o pivo
             w = planetas[i];
             planetas[i] = planetas[j];
             planetas[j] = w;
@@ -83,8 +66,9 @@ void ArranjoPlanetas::ParticaoQuick(int esq, int dir, int &i, int &j)
 void ArranjoPlanetas::Quick(int esq, int dir)
 {
     int i, j;
-    //Imprime();
+    //Particiona o vetor atual
     ParticaoQuick(esq, dir, i, j);
+    //Faz as chamadas recursivas para os subvetores a esquerda e a direita da particao
     if (esq < j)
         Quick(esq, j);
     if (i < dir)
@@ -92,5 +76,7 @@ void ArranjoPlanetas::Quick(int esq, int dir)
 }
 void ArranjoPlanetas::QuickSort()
 {
+    //Chamada necessaria para que se inicie a ordenacao e quando todas as chamadas recursivas
+    //terminarem o vetor estara ordenado
     Quick(0, tamanho - 1);
 }

@@ -2,29 +2,11 @@
 #include <iostream>
 
 /*Implementacao dos metodos da classe Planeta.*/
-Planeta::Planeta()
-{
-    nome = " ";
-    distancia = -1;
-    populacao = -1;
-}
 Planeta::Planeta(std::string n, int d, int p)
 {
     nome = n;
     distancia = d;
     populacao = p;
-}
-std::string Planeta::GetNome()
-{
-    return nome;
-}
-int Planeta::GetDistancia()
-{
-    return distancia;
-}
-int Planeta::GetPopulacao()
-{
-    return populacao;
 }
 void Planeta::Imprime()
 {
@@ -46,32 +28,36 @@ void ArranjoPlanetas::Imprime()
     for(int i = 0; i < tamanho; i++)
         planetas[i].Imprime();
 }
-void ArranjoPlanetas::Limpa()
-{
-    tamanho = 0;
-}
 void ArranjoPlanetas::RefazHeap(int Esq, int Dir)
 {
     int i, j;
-    Planeta x;
+    Planeta x(" ", -1, -1);
     i = Esq;
+    //Adaptacao da conta vista em aula para considerar o vetor comecando da posicao 0
     j = ((i + 1) * 2) - 1;
     x = planetas[i];
     while (j <= Dir)
     {
         if(j < Dir)
         {
-            if(planetas[j].GetDistancia() < planetas[j + 1].GetDistancia())
+            if(planetas[j].distancia < planetas[j + 1].distancia)
                 j++;
-            else if(planetas[j].GetDistancia() == planetas[j + 1].GetDistancia() && planetas[j].GetPopulacao() > planetas[j + 1].GetPopulacao())
+            //Possui essa comparacao extra para verificar se quando os filhos possuem a mesma distancia,
+            //deve ser o candidato a ser trocado com o pai o que possuir a menor populacao 
+            else if(planetas[j].distancia == planetas[j + 1].distancia && planetas[j].populacao > planetas[j + 1].populacao)
                 j++;
         }
-        if(x.GetDistancia() > planetas[j].GetDistancia())
+        //Alem de verificar que nao se deve trocar o pai caso ele possua maior distancia
+        //do que seus filhos, o segundo break é para quando a distancia for igual mas o pai
+        //possuir uma populacao menor, pois ao final da ordenacao esse pai ira ficar maiis a
+        //direita dos seus filhos.
+        if(x.distancia > planetas[j].distancia)
             break;
-        else if(x.GetDistancia() == planetas[j].GetDistancia() && x.GetPopulacao() <= planetas[j].GetPopulacao())
+        else if(x.distancia == planetas[j].distancia && x.populacao <= planetas[j].populacao)
             break;
         planetas[i] = planetas[j];
         i = j;
+        //Adaptacao da conta vista em aula para considerar o vetor comecando da posicao 0
         j = ((i + 1) * 2) - 1;
     }
     planetas[i] = x;
@@ -79,6 +65,7 @@ void ArranjoPlanetas::RefazHeap(int Esq, int Dir)
 void ArranjoPlanetas::ConstroiHeap()
 {
     int Esq;
+    //Constroi o heap utilizando o vetor todo e considerando como posicao inicial o 0
     Esq = (tamanho / 2);
     while(Esq > 0)
     {
@@ -89,16 +76,18 @@ void ArranjoPlanetas::ConstroiHeap()
 void ArranjoPlanetas::HeapSort()
 {
     int Esq, Dir;
-    Planeta x;
-    ConstroiHeap(); // constroi o heap 
+    Planeta x(" ", -1, -1);
+    ConstroiHeap(); 
     Esq = 0;
     Dir = tamanho - 1;
-    while(Dir > 0) // ordena o vetor 
+    //Utiliza a funcao refaz para sempre que colocar o primeiro elemento da lista na posicao
+    //correta correspondente a ordenacao, considera o heap uma posicao menor assim ordenando 
+    //o vetor por completo
+    while(Dir > 0) 
     { 
         x = planetas[0];
         planetas[0] = planetas[Dir];
         planetas[Dir] = x;
-        //Imprime();
         Dir--;
         RefazHeap(Esq, Dir);
     }

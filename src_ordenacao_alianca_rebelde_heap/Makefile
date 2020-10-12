@@ -2,8 +2,8 @@
 # ================
 CC=g++ 
 CFLAGS=-g -Wall -Wextra
-EXEC=./heap
-TMPOUT=heap.testresult
+EXEC=./tp2
+TMPOUT=tp2.testresult
 
 # === REGRAS =====
 # ================
@@ -18,4 +18,4 @@ all: $(EXEC)
 test: $(EXEC)
 	@bash run_tests.sh $(EXEC) $(TMPOUT)
 clean: # remove todos os arquivos temporarios que forem gerados pela compilacao
-	rm -rf heap.o heap headers/heap.o
+	rm -rf heap.o heap headers/heap.o tp2
