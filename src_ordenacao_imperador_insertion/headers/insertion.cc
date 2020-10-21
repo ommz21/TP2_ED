@@ -38,7 +38,7 @@ void ArranjoPlanetas::InsertionSort()
         j = i - 1;
         while(( j >= 0 ) && (aux.distancia <= planetas[j].distancia))
         {
-            //Verifica o caso de distancias iguaism caso o planeta que estamos querendo inserir
+            //Verifica o caso de distancias iguais caso o planeta que estamos querendo inserir
             //no vetor possua a mesma distancia que um outro planeta, porem sua populacao eh menor
             //entao achamos a posicao dele a direita do que possui a populacoa maior
             if(aux.distancia == planetas[j].distancia && aux.populacao < planetas[j].populacao)
